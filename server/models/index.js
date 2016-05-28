@@ -1,7 +1,15 @@
 var db = require('../db');
 
 
-
+var postMessage = function(data, userId, callback) {
+  db.connection.query('insert into messages(userId, message, room) values('  + userId + ', "' + data.text + '", "' + data.roomname + '");', function(err, rows, fields) {
+    if(!err) {
+      callback(true);
+    } else {
+      console.log('error in query:', err);
+    }
+  });  
+};
 
 module.exports = {
   messages: {
@@ -24,17 +32,38 @@ module.exports = {
       //check if user id exists
       db.connection.query('SELECT id FROM users where username="' + data.username + '";', function(err, rows, fields) {
         if(!err) {
-          var userId = rows[0].id;
-          console.log('Rows:', rows, ' | type:', typeof rows);
+          var userId = 0;
+
+          if (rows.length > 0) {
+            // User exists
+            userId = rows[0].id;
+            postMessage(data, userId, callback);
+          } else {
+            db.connection.query('insert into users(username) values("' + data.username + '");', function(err, rows, fields) {
+              if(!err) {
+                db.connection.query('SELECT id FROM users where username="' + data.username + '";', function(err, rows, fields) {
+                  if (!err) {
+                    userId = rows[0].id;
+                    postMessage(data, userId, callback);
+                  } else {
+                    console.log('error in select:', err);
+                  }
+                });
+              } else {
+                console.log('error in query to create user row:', err);
+              }
+            });  
+          }
+
           //yes: post to messages table
-          console.log('in insert query');
-          db.connection.query('insert into messages(userId, message, room) values('  + userId + ', "' + data.text + '", "' + data.roomname + '");', function(err, rows, fields) {
-            if(!err) {
-              callback(true);
-            } else {
-              console.log('error in query:', err);
-            }
-          });  
+
+          // db.connection.query('insert into messages(userId, message, room) values('  + userId + ', "' + data.text + '", "' + data.roomname + '");', function(err, rows, fields) {
+          //   if(!err) {
+          //     callback(true);
+          //   } else {
+          //     console.log('error in query:', err);
+          //   }
+          // });  
         } else {
           console.log('err in the query:', err);
         }
