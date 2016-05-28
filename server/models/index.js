@@ -24,11 +24,11 @@ module.exports = {
       });
     }, // a function which produces all the messages
     post: function (data, callback) {
-      console.log('data, should be a {}: ', data);
+      // console.log('data, should be a {}: ', data);
       // { username: 'asdf', text: 'asdfsadfsadf', roomname: 'lobby' }
-      console.log(data.username)
-      console.log(data.text)
-      console.log(data.roomname)
+      // console.log(data.username)
+      // console.log(data.text)
+      // console.log(data.roomname)
       //check if user id exists
       db.connection.query('SELECT id FROM users where username="' + data.username + '";', function(err, rows, fields) {
         if(!err) {

@@ -66,10 +66,14 @@ $(function() {
         data: { order: '-createdAt'},
         success: function(data) {
           console.log('chatterbox: Messages fetched');
-          console.log('data:', data);
+          // console.log('data:', data);
 
           // Don't bother if we have nothing to work with
-          if (!data.results || !data.results.length) { return; }
+          if (!data.results || !data.results.length) {
+            app.$chats.html('No messages!');
+            app.stopSpinner();
+            return;
+          }
 
           // Get the last message
           var mostRecentMessage = data.results[data.results.length-1];
@@ -85,6 +89,11 @@ $(function() {
 
             // Store the ID of the most recent message
             app.lastMessageId = mostRecentMessage.objectId;
+          }
+
+          if (app.lastMessageId === 0) {
+            console.log('no messages');
+            app.$chats.html('No messages!');
           }
         },
         error: function(data) {
@@ -226,7 +235,10 @@ $(function() {
     },
     startSpinner: function(){
       $('.spinner img').show();
+      if (app.lastMessageId > 0) {
       $('form input[type=submit]').attr('disabled', "true");
+        
+      }
     },
 
     stopSpinner: function(){
