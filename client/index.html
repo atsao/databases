@@ -6,10 +6,10 @@
     <link rel="stylesheet" href="styles/styles.css">
 
     <!-- dependencies -->
-    <script src="../bower_components/jquery/jquery.min.js"></script>
+    <script src="bower_components/jquery/jquery.min.js"></script>
 
-    <script src="../bower_components/underscore/underscore-min.js"></script>
-    <script src="../bower_components/backbone/backbone.js"></script>
+    <script src="bower_components/underscore/underscore-min.js"></script>
+    <script src="bower_components/backbone/backbone.js"></script>
         <!-- your scripts -->
     <script src="env/config.js"></script>
     <script src="scripts/app.js"></script>
@@ -37,7 +37,7 @@
       <div id="chats"></div>
       <script>
         // fully-featured solution: 
-        // $(app.init.bind(app));
+        $(app.init.bind(app));
 
         // simplified solution:
         // $(function() {
@@ -45,13 +45,13 @@
         // });
 
         // Bakbone implementation: 
-        $(function() {
-          var messages = new Messages();
-          messages.loadMsgs();
-          var formView = new FormView({el: $('#main'), collection: messages});
-          var messagesView = new MessagesView({collection:messages});
-          setInterval( messages.loadMsgs.bind(messages), 1000);
-        });
+        // $(function() {
+        //   var messages = new Messages();
+        //   messages.loadMsgs();
+        //   var formView = new FormView({el: $('#main'), collection: messages});
+        //   var messagesView = new MessagesView({collection:messages});
+        //   setInterval( messages.loadMsgs.bind(messages), 1000);
+        // });
       </script>
           </div>
   </body>

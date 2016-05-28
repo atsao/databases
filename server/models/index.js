@@ -5,8 +5,27 @@ var db = require('../db');
 
 module.exports = {
   messages: {
-    get: function () {}, // a function which produces all the messages
-    post: function () {} // a function which can be used to insert a message into the database
+    get: function (callback) {
+      db.connection.query('SELECT * from messages;', function(err, rows, fields) {
+        if (!err) {
+          // console.log('The solution is: ', rows);
+          callback(rows);
+        } else {
+          console.log('Error while performing Query.');
+        }
+      });
+    }, // a function which produces all the messages
+    post: function (data, callback) {
+      console.log('data, should be a {}', data);
+      db.connection.query('SELECT * from messages;', function(err, rows, fields) {
+        if (!err) {
+          // console.log('The solution is: ', rows);
+          callback(true);
+        } else {
+          console.log('Error while performing Query.');
+        }
+      });
+    } // a function which can be used to insert a message into the database
   },
 
   users: {
