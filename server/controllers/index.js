@@ -15,7 +15,6 @@ var headers = {
 module.exports = {
   messages: {
     get: function (req, res) {
-      console.log('entering messages.get');
       // res.end('testing get');
       // console.log('req.url:', req.url);
       // // var data = "";
@@ -40,20 +39,30 @@ module.exports = {
 // res.end('test');
     }, // a function which handles a get request for all messages
     post: function (req, res) {  // a function which handles posting a message to the database
-      // console.log('req.body in post: ', req.body);
-      var data = "";
-      request.on('data', function(chunk){
-        data += chunk;
-      });
-      request.on('end', function(){
-        // callback(JSON.parse(data));
-        models.messages.post(data, function() {
+      console.log('req.body in post: ', req.body);
+      // var data = "";
+      // req.on('data', function(chunk){
+      //   data += chunk;
+      // });
+      // req.on('end', function(){
+      //   // callback(JSON.parse(data));
+      //   console.log('entering end');
+      //   models.messages.post(data, function() {
+      //     if (true) {
+      //       res.writeHead(201, headers);
+      //       res.end(JSON.stringify(data));
+      //     }
+      //   });
+      // });
+
+models.messages.post(req.body, function() {
+  console.log('testing!');
           if (true) {
             res.writeHead(201, headers);
-            res.end(JSON.stringify(data));
+            res.end(JSON.stringify(req.body));
           }
         });
-      });
+
       // res.writeHead(200, headers);
       // res.end();
     } 
