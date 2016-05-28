@@ -6,7 +6,7 @@ var db = require('../db');
 module.exports = {
   messages: {
     get: function (callback) {
-      db.connection.query('SELECT * from messages;', function(err, rows, fields) {
+      db.connection.query('select m.message as text, m.room as roomname, m.createdAt as createdAt, u.username as username from messages m inner join users u on u.id = m.userId;', function(err, rows, fields) {
         if (!err) {
           // console.log('The solution is: ', rows);
           callback(rows);

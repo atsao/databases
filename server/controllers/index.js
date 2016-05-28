@@ -31,8 +31,11 @@ module.exports = {
   // res.header("Access-Control-Allow-Headers", "content-type, accept");
       models.messages.get(function(data) {
         res.writeHead(200, headers);
+        var test = {
+          results: data
+        }
 
-        res.end(JSON.stringify(data));
+        res.end(JSON.stringify(test));
       });
 // res.end('test');
     }, // a function which handles a get request for all messages
