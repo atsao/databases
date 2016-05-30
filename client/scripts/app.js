@@ -63,10 +63,10 @@ $(function() {
         url: app.server,
         type: 'GET',
         contentType: 'application/json',
-        data: { order: '-createdAt'},
+        // data: { order: '-createdAt'},
         success: function(data) {
           console.log('chatterbox: Messages fetched');
-          // console.log('data:', data);
+          console.log('data:', data);
 
           // Don't bother if we have nothing to work with
           if (!data.results || !data.results.length) {
@@ -164,7 +164,7 @@ $(function() {
         // Add in the message data using DOM methods to avoid XSS
         // Store the username in the element's data
         var $username = $('<span class="username"/>');
-        $username.text(data.username+': ').attr('data-username', data.username).attr('data-roomname',data.roomname).appendTo($chat);
+        $username.text(data.User.username+': ').attr('data-username', data.User.username).attr('data-roomname',data.roomname).appendTo($chat);
 
         // Add the friend class
         if (app.friends[data.username] === true)
